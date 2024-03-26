@@ -3,6 +3,9 @@ import * as dotevnv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
 
+// Routers require
+const produtoRouter = require('./router/produto_router');
+
 dotevnv.config()
 
 if (!process.env.PORT) {
@@ -18,6 +21,14 @@ app.use(express.urlencoded({extended : true}))
 app.use(cors())
 app.use(helmet())
 
+app.get('/', (req, res) => {
+    res.send('<h1>Hello World!</h1>')
+  })
+
+
+app.use('/api/produtos', produtoRouter);
+
+
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`)
+    console.log(`Server is listening on port http://localhost:${PORT}`)
 })
