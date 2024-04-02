@@ -1,4 +1,4 @@
-import { Produto } from "../model/produto.interface";
+import { Produto } from "../interfaces/produto.interface";
 
 const produtoRepository = require('../repository/produto_repository')
 
