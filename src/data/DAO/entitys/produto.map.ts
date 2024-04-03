@@ -1,16 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
+import { Categoria } from "../../../interfaces/categoria.interface";
 
 @Entity()
-export class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
+export class Produto extends BaseEntity {
+    @PrimaryGeneratedColumn('increment')
     id: number
 
     @Column()
-    firstName: string
+    nome: string;
 
     @Column()
-    lastName: string
+    preco: number;
 
     @Column()
-    age: number
+    descricao?: string;
+
+    @Column()
+    categoria: Categoria;
 }
