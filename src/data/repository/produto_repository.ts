@@ -1,4 +1,4 @@
-import { Produto } from "../../interfaces/produto.interface";
+import { Produto } from "../../interface/produto.interface";
 
 let listaProdutos: Produto[] = [];
 let idGerador = 1;

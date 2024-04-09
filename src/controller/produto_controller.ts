@@ -4,12 +4,12 @@ import { Request, Response } from 'express';
 const produtoService = require('../service/produto_service')
 
 
-async function listarProdutos(req: Request, res: Response) {
+async function listar(req: Request, res: Response) {
     const listaProdutos = await produtoService.listar();
     res.json(listaProdutos);
 }
 
-async function inserirProdutos(req: Request, res: Response) {
+async function inserir(req: Request, res: Response) {
     let produto = req.body;
     try {
         const prodInserido = await produtoService.inserir(produto);
@@ -22,7 +22,7 @@ async function inserirProdutos(req: Request, res: Response) {
 }
 
 
-async function consultarProduto(req: Request, res: Response): Promise<void> {
+async function consultar(req: Request, res: Response): Promise<void> {
     const id = +req.params.id;
     try {
       const prod = await produtoService.buscarPorId(id);
@@ -34,7 +34,7 @@ async function consultarProduto(req: Request, res: Response): Promise<void> {
     }
 }
 
-async function atualizarProduto (req: Request, res: Response) {
+async function atualizar (req: Request, res: Response) {
     const id = +req.params.id;
     let produto = req.body;
   
@@ -47,7 +47,7 @@ async function atualizarProduto (req: Request, res: Response) {
     }
 }
 
-async function deletarProduto(req: Request, res: Response) {
+async function deletar(req: Request, res: Response) {
     const id = +req.params.id;
     try{ 
       const produtoDeletado = await produtoService.deletar(id);
@@ -59,9 +59,9 @@ async function deletarProduto(req: Request, res: Response) {
 }
 
 module.exports = {
-    listarProdutos,
-    inserirProdutos,
-    consultarProduto,
-    atualizarProduto,
-    deletarProduto
+    listar,
+    inserir,
+    consultar,
+    atualizar,
+    deletar
 }

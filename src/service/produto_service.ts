@@ -1,22 +1,22 @@
-import { Produto } from "../interfaces/produto.interface";
+import { Produto } from "../interface/produto.interface";
 
-const produtoRepository = require('../repository/produto_repository')
+const produtoRepository = require('../data/repository/produto_repository')
 
-function listar() {
-    return produtoRepository.listar();
+async function listar() {
+    return await produtoRepository.listar();
 }
 
-function inserir(produto: Produto) {
+async function inserir(produto: Produto) {
     if(produto && produto.nome && produto.preco) {// produto != undefined
-        produtoRepository.inserir(produto);
+        await produtoRepository.inserir(produto);
     }
     else {
         throw {id:400, message:"Produto nao possui nome ou preco"};
     }
 }
 
-function buscarPorId(id: number) {
-    const produto = produtoRepository.buscarPorId(id);
+async function consultar(id: number) {
+    const produto = await produtoRepository.buscarPorId(id);
     if(produto) {
         return produto;
     }
@@ -25,22 +25,22 @@ function buscarPorId(id: number) {
     }
 }
 
-function atualizar(id: number, produtoAtualizado: Produto) {
-    const produto = produtoRepository.buscarPorId(id);
+async function atualizar(id: number, produtoAtualizado: Produto) {
+    const produto = await produtoRepository.buscarPorId(id);
     if(!produto) {
         throw {id: 404, message: "Produto nao encontrado"};
     }
     
     if(produtoAtualizado && produtoAtualizado.nome && produtoAtualizado.preco){
-        produtoRepository.atualizar(id, produtoAtualizado);
+        await produtoRepository.atualizar(id, produtoAtualizado);
     }
     else {
         throw {id: 400, message: "Produto nao possui um dos campos obrigatorios"};
     }
 }
 
-function deletar(id: number) {
-    const produtoDeletado = produtoRepository.deletar(id);
+async function deletar(id: number) {
+    const produtoDeletado = await produtoRepository.deletar(id);
     if(produtoDeletado){
         return produtoDeletado;
     }
@@ -52,7 +52,7 @@ function deletar(id: number) {
 module.exports = {
     listar,
     inserir,
-    buscarPorId,
+    consultar,
     atualizar,
     deletar
 }
