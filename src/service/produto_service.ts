@@ -16,6 +16,9 @@ async function inserir(produto: Produto) {
 }
 
 async function consultar(id: number) {
+    if(id == 0 || id == null){
+        throw new Error(`Id inválido: ${id}`)
+    }
     const produto = await produtoRepository.buscarPorId(id);
     if(produto) {
         return produto;
