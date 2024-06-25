@@ -15,6 +15,7 @@ if (!process.env.PORT) {
 const PORT = parseInt(process.env.PORT as string, 10)
 
 const app = express()
+const middlewareAcesso = require('./middleware/acesso_middleware');
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
   })
 
 
-app.use('/api/produtos', produtoRouter);
+app.use('/api/produtos', middlewareAcesso.verificarAcesso, produtoRouter);
 
 
 app.listen(PORT, () => {
