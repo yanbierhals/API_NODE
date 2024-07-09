@@ -1,19 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
 
 @Entity()
-export class ProdutoMap extends BaseEntity {
+export class CategoriaMap extends BaseEntity {
     @PrimaryGeneratedColumn('increment')
-    id: number
-
+    id: number;
     @Column()
     nome: string;
-
-    @Column()
-    preco: number;
-
     @Column()
     descricao?: string;
-
-    @Column()
-    categoria: ProdutoMap;
 }

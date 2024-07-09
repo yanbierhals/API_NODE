@@ -1,25 +1,29 @@
 import { AppDataSource } from "..";
-import { Produto } from "../entitys/produto.map";
+import { ProdutoMap } from "../entitys/produto.map";
 
-
-const produtoRepository = AppDataSource.getRepository(Produto);
+const produtoRepository = AppDataSource.getRepository(ProdutoMap);
 
 // Função para criar um novo produto
-async function inserirProduto(nome: string, descricao: string, preco: number): Promise<Produto> {
-    const novoProduto = new Produto();
+async function inserirProduto(nome: string, descricao: string, preco: number): Promise<ProdutoMap> {
+    const novoProduto = new ProdutoMap();
     novoProduto.nome = nome;
     novoProduto.descricao = descricao;
     novoProduto.preco = preco;
-    return await produtoRepository.save(novoProduto);
+
+    // Salve o novo produto no banco de dados e retorne o produto inserido
+    const resultado = await produtoRepository.save(novoProduto);
+
+    // Retorne o produto inserido
+    return resultado;
 }
 
 // Função para obter um produto pelo ID
-async function concultarProduto(id: number): Promise<Produto | null> {
+async function concultarProduto(id: number): Promise<ProdutoMap | null> {
     return await produtoRepository.findOneBy({id: id })
 }
 
 // Função para atualizar um produto
-async function atualizarProduto(id: number, nome: string, descricao: string, preco: number): Promise<Produto | undefined> {
+async function atualizarProduto(id: number, nome: string, descricao: string, preco: number): Promise<ProdutoMap | undefined> {
     const produto = await produtoRepository.findOneBy({id: id });
     if (produto) {
         produto.nome = nome;
@@ -41,7 +45,7 @@ async function deletarProduto(id: number): Promise<boolean> {
 }
 
 // Função para listar todos os produtos
-async function listarProdutos(): Promise<Produto[]> {
+async function listarProdutos(): Promise<ProdutoMap[]> {
     return await produtoRepository.find();
 }
 
