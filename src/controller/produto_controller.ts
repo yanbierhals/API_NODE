@@ -1,5 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from 'express';
+const StatusCodes = require('http-status-codes');
+const express = require('express');
 
 const produtoService = require('../service/produto_service')
 
