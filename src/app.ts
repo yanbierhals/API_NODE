@@ -1,10 +1,10 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const helmet = require('helmet');
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import helmet from 'helmet';
 
 // Routers require
-const produtoRouter = require('./router/produto_router.ts');
+const produtoRouter = require('./router/produto_router');
 
 dotenv.config()
 
@@ -16,7 +16,7 @@ if (!process.env.PORT) {
 const PORT = parseInt(process.env.PORT, 10);
 
 const app = express();
-const middlewareAcesso = require('./middleware/acesso_middleware');
+//const middlewareAcesso = require('./middleware/acesso_middleware'); auth
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>');
 });
 
-app.use('/api/produtos', middlewareAcesso.verificarAcesso, produtoRouter);
+app.use('/api/produtos', produtoRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
 
 app.listen(PORT, () => {
     console.log(`Server is listening on http://localhost:${PORT}`);

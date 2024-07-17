@@ -1,10 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from 'express';
-const StatusCodes = require('http-status-codes');
-const express = require('express');
+import { Categoria } from "../entidades/categoria";
+import { Produto } from "../entidades/produto";
 
 const produtoService = require('../service/produto_service')
-
 
 async function listar(req: Request, res: Response) {
     const listaProdutos = await produtoService.listar();
@@ -24,11 +23,14 @@ async function inserir(req: Request, res: Response) {
 }
 
 
-async function consultar(req: Request, res: Response): Promise<void> {
+function consultar(req: Request, res: Response): any {
+   
+
     const id = +req.params.id;
     try {
-      const prod = await produtoService.buscarPorId(id);
-      res.json(prod);
+      const categoria = new Categoria(1, 'Eletrônicos');
+      const produto = new Produto(1, 'Smartphone', 699.99, categoria, 'Um smartphone de alta qualidade');
+      res.json(produto);
     }
     catch(err: any) {
       //id-> 404 / msg -> msg de erro

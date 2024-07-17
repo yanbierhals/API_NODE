@@ -1,8 +1,10 @@
-const produtoController = require('../controller/produto_controller.ts')
-//const express = require('express');
-const router = express.Router()
+import express from 'express';
+const produtoController = require('../controller/produto_controller');
 
-//router: /api/produtos
+
+const router = express.Router();
+
+// Roteamento: /api/produtos
 router.get('/', produtoController.listar);
 router.post('/', produtoController.inserir);
 router.get('/:id', produtoController.consultar);

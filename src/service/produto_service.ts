@@ -1,4 +1,5 @@
-import { Produto } from "../interface/produto.interface";
+import { Categoria } from "../entidades/categoria";
+import { Produto } from "../entidades/produto";
 
 const produtoRepository = require('../data/repository/produto_repository')
 
@@ -15,11 +16,12 @@ async function inserir(produto: Produto) {
     }
 }
 
-async function consultar(id: number) {
+function consultar(id: number) {
+   
     if(id == 0 || id == null){
-        throw new Error(`Id inválido: ${id}`)
+        throw {id:400, message:`Id inválido: ${id}`};
     }
-    const produto = await produtoRepository.buscarPorId(id);
+    const produto = produtoRepository.consultar(id);
     if(produto) {
         return produto;
     }
@@ -51,6 +53,8 @@ async function deletar(id: number) {
         throw {id: 404, message: "Produto nao encontrado"};
     }
 }
+
+
 
 module.exports = {
     listar,

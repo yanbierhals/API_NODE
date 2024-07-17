@@ -1,6 +1,18 @@
-import { Produto } from "../../interface/produto.interface";
+import { Categoria } from "../../entidades/categoria";
+import { Produto } from "../../entidades/produto";
 
-let listaProdutos: Produto[] = [];
+// Definindo categorias
+const categoriaEletronicos = new Categoria(1, 'Eletrônicos');
+const categoriaRoupas = new Categoria(2, 'Roupas');
+const categoriaAlimentos = new Categoria(3, 'Alimentos');
+
+// Criando lista de produtos
+let listaProdutos: Produto[] = [
+  new Produto(1, 'Smartphone2', 999.99, categoriaEletronicos, 'Um smartphone moderno'),
+  new Produto(2, 'Camiseta', 29.99, categoriaRoupas, 'Camiseta de algodão'),
+  new Produto(3, 'Maçã', 1.99, categoriaAlimentos, 'Maçãs frescas'),
+];
+
 let idGerador = 1;
 
 function listar() {
@@ -16,7 +28,7 @@ function inserir(produto:Produto) {
     listaProdutos.push(produto);
 }
 
-function buscarPorId(id: number){
+function consultar(id: number){
     return listaProdutos.find(function(produto) {
         return(produto.id === id);        
     })   
@@ -60,7 +72,7 @@ function pesquisarPorLikeNome(nome: string) {
 module.exports = {
     listar,
     inserir,
-    buscarPorId,
+    consultar,
     atualizar,
     deletar,
     pesquisarPorCategoria,

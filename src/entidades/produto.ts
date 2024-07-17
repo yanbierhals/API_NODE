@@ -1,9 +1,19 @@
-//import { Categoria } from "./categoria";
+import { Categoria } from './categoria';
 
-class Produtod {
-    id: number;
-    nome: string;
-    preco: number;
-    descricao?: string;
-    //categoria: Categoria;
+export class Produto {
+  id: number;
+  nome: string;
+  preco: number;
+  descricao?: string;
+  categoria: Categoria;
+
+  constructor(id: number, nome: string, preco: number, categoria: Categoria, descricao?: string) {
+    this.id = id;
+    this.nome = nome;
+    this.preco = preco;
+    this.categoria = categoria;
+    if (descricao) {
+      this.descricao = descricao;
+    }
+  }
 }
