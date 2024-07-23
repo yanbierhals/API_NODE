@@ -1,8 +1,9 @@
 import express from 'express';
+const router = express.Router();
+
 const categoriaController = require('../controller/categoria_controller');
 
 
-const router = express.Router();
 
 // Roteamento: /api/produtos
 router.get('/', categoriaController.listar);

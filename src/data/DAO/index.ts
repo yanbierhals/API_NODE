@@ -1,5 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import { CategoriaMap } from "./entitys/categoria.map"
+import { ProdutoMap } from "./entitys/produto.map"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -8,9 +10,8 @@ export const AppDataSource = new DataSource({
     host: 'localhost',
     port: 5432,
     database: 'postgres',
-    //entities: [],
-    synchronize: false,
-    logging: false,
+    entities: [ProdutoMap, CategoriaMap],
+    synchronize: true,
 })
 
 // to initialize the initial connection with the database, register all entities

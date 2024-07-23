@@ -1,19 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 
-@Entity()
+@Entity({ name: 'PRODUTO' })
 export class ProdutoMap extends BaseEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number
+    @PrimaryGeneratedColumn('increment', { name: 'ID' })
+    id: number;
 
-    @Column()
+    @Column({ name: 'NOME' , nullable: true })
     nome: string;
 
-    @Column()
+    @Column({ name: 'PRECO' , nullable: true })
     preco: number;
 
-    @Column()
+    @Column({ name: 'DESCRICAO', nullable: true })
     descricao?: string;
 
-    @Column()
-    categoria: ProdutoMap;
+    @Column({ name: "CATEGORIA_ID", nullable: false }) // Define a coluna de chave estrangeira
+    categoria: number;
 }

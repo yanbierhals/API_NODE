@@ -6,7 +6,7 @@ const produtoRepository = require('../data/repository/produto_repository')
 const produtoDao = require('../data/DAO/daoService/produto_dao')
 
 async function listar(): Promise<ProdutoMap[]> {
-    return await produtoRepository.listar();
+    return await produtoDao.listar();
 }
 
 async function inserir(produto: Produto): Promise<number> {

@@ -5,15 +5,12 @@ export class Produto {
   nome: string;
   preco: number;
   descricao?: string;
-  categoria: Categoria;
+  categoria: number;
 
-  constructor(id: number, nome: string, preco: number, categoria: Categoria, descricao?: string) {
+  constructor(id: number, nome: string, preco: number, categoria: number, descricao?: string) {
     this.id = id;
     this.nome = nome;
     this.preco = preco;
     this.categoria = categoria;
-    if (descricao) {
-      this.descricao = descricao;
-    }
   }
 }

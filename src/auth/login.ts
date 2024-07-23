@@ -8,7 +8,7 @@ const userAdmin = {
     senha: "12345"
 }
 
-function verificarLogin(user: any) {
+function verificarLogin(user: Usuario) {
     if(user && user.usuario == userAdmin.usuario
         && user.senha == userAdmin.senha)
     {

@@ -1,4 +1,4 @@
-const loginService = require('../service/login_service')
+const loginService = require('./login')
 
 function verificarAcesso(req: any, res: any, next: any) {
     try{
@@ -7,7 +7,7 @@ function verificarAcesso(req: any, res: any, next: any) {
         next();
     }
     catch (err:any) {
-        res.status(err.id).json(err);
+        res.status(401).json(err);
     }
 }
 

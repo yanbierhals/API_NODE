@@ -1,11 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
-@Entity()
+@Entity({ name: 'CATEGORIA' })
 export class CategoriaMap extends BaseEntity {
-    @PrimaryGeneratedColumn('increment')
+    @PrimaryGeneratedColumn('increment', { name: 'ID' })
     id: number;
-    @Column()
+
+    @Column({ name: 'NOME', nullable: true })
     nome: string;
-    @Column()
+
+    @Column({ name: 'DESCRICAO', nullable: true })
     descricao?: string;
 }
