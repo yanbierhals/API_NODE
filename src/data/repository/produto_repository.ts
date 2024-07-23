@@ -1,72 +1,52 @@
-import { Categoria } from "../../entidades/categoria";
 import { Produto } from "../../entidades/produto";
+import client from './postgres/dbConnection';
 
-// Definindo categorias
-const categoriaEletronicos = new Categoria(1, 'Eletrônicos');
-const categoriaRoupas = new Categoria(2, 'Roupas');
-const categoriaAlimentos = new Categoria(3, 'Alimentos');
 
-// Criando lista de produtos
-let listaProdutos: Produto[] = [
-  new Produto(1, 'Smartphone2', 999.99, categoriaEletronicos, 'Um smartphone moderno'),
-  new Produto(2, 'Camiseta', 29.99, categoriaRoupas, 'Camiseta de algodão'),
-  new Produto(3, 'Maçã', 1.99, categoriaAlimentos, 'Maçãs frescas'),
-];
-
-let idGerador = 1;
-
-function listar() {
-    return listaProdutos;
+async function listar() {
+    const query = 'SELECT * FROM public."PRODUTO"';
+    const result = await client.query(query);
+    return result.rows;
 }
 
-function geraId() {
-    return idGerador++;
+async function inserir(produto: Produto) {
+    const query = 'INSERT INTO public."PRODUTO" ("NOME", "PRECO", "DESCRICAO", "CATEGORIA_ID") VALUES ($1, $2, $3, $4) RETURNING "ID"';
+    const values = [produto.nome, produto.preco, produto.descricao, produto.categoria.id];
+    const result = await client.query(query, values);
+    produto.id = result.rows[0].ID;
 }
 
-function inserir(produto:Produto) {
-    produto.id = geraId();
-    listaProdutos.push(produto);
+async function consultar(id: number): Promise<Produto> {
+    const query = 'SELECT * FROM public."PRODUTO" WHERE "ID" = $1';
+    const values = [id];
+    const result = await client.query(query, values);
+    return result.rows[0];
 }
 
-function consultar(id: number){
-    return listaProdutos.find(function(produto) {
-        return(produto.id === id);        
-    })   
+async function atualizar(id: number, produto: Produto) {
+    const query = 'UPDATE public."PRODUTO" SET "NOME" = $1, "PRECO" = $2, "DESCRICAO" = $3, "CATEGORIA_ID" = $4 WHERE "ID" = $5';
+    const values = [produto.nome, produto.preco, produto.descricao, produto.categoria.id, id];
+    await client.query(query, values);
 }
 
-
-function atualizar(id:number , produto:Produto) {
-    for(let ind in listaProdutos) {
-        if(listaProdutos[ind].id === id) {
-            listaProdutos[ind] = produto;
-            listaProdutos[ind].id = id;
-            return;
-        }
-    }
+async function deletar(id: number) {
+    const query = 'DELETE FROM public."PRODUTO" WHERE "ID" = $1 RETURNING *';
+    const values = [id];
+    const result = await client.query(query, values);
+    return result.rows[0]; // Retorna o produto deletado, se necessário
 }
 
-function deletar(id: number) {
-    for(let ind in listaProdutos) {
-        if(listaProdutos[ind].id === id) {
-            return listaProdutos.splice(parseFloat(ind),1)[0];
-        }
-    }
+async function pesquisarPorCategoria(categoria: number) {
+    const query = 'SELECT * FROM public."PRODUTO" WHERE "CATEGORIA_ID" = $1';
+    const values = [categoria];
+    const result = await client.query(query, values);
+    return result.rows;
 }
 
-function pesquisarPorCategoria(categoria: any) {//TODO typar
-    return listaProdutos.filter(
-        (produto) => {
-            return produto.categoria === categoria;
-        }
-    );
-}
-
-function pesquisarPorLikeNome(nome: string) {
-    return listaProdutos.filter(
-        (produto) => {
-            return produto.nome.toUpperCase().includes(nome.toUpperCase());
-        }
-    )
+async function pesquisarPorLikeNome(nome: string) {
+    const query = 'SELECT * FROM public."PRODUTO" WHERE UPPER("NOME") LIKE $1';
+    const values = [`%${nome.toUpperCase()}%`];
+    const result = await client.query(query, values);
+    return result.rows;
 }
 
 module.exports = {

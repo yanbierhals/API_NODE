@@ -5,60 +5,64 @@ import { Produto } from "../entidades/produto";
 
 const produtoService = require('../service/produto_service')
 
-async function listar(req: Request, res: Response) {
-    const listaProdutos = await produtoService.listar();
-    res.json(listaProdutos);
+async function listar(req: Request, res: Response): Promise<Response> {
+    
+
+    try {
+      const listaProdutos = await produtoService.listar();
+      return res.json(listaProdutos);
+    }
+    catch(err: any) {
+      return res.status(err.id).json({msg: err.message});
+    }
 }
 
-async function inserir(req: Request, res: Response) {
+async function inserir(req: Request, res: Response): Promise<Response> {
     let produto = req.body;
     try {
         const prodInserido = await produtoService.inserir(produto);
-        res.status(StatusCodes.OK).json(prodInserido);
+        return res.status(StatusCodes.OK).json(prodInserido);
     }
     catch(err: any) {
-        //id-> 400 / msg -> msg de erro
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg: err.message});
+      return res.status(err.id).json({msg: err.message});
     }
 }
 
 
-function consultar(req: Request, res: Response): any {
-   
+async function consultar(req: Request, res: Response): Promise<Response> {
+    const id = +req.params.id; // Supondo que o id seja um número
 
-    const id = +req.params.id;
     try {
-      const categoria = new Categoria(1, 'Eletrônicos');
-      const produto = new Produto(1, 'Smartphone', 699.99, categoria, 'Um smartphone de alta qualidade');
-      res.json(produto);
-    }
-    catch(err: any) {
-      //id-> 404 / msg -> msg de erro
-      res.status(err.id).json({msg: err.message});
+        const produto = await produtoService.consultar(id);
+        return res.json(produto);
+      } catch (err: any) {
+        // Retornar o erro original na resposta
+        return res.status(500).json({ message: err.message });
     }
 }
 
-async function atualizar (req: Request, res: Response) {
+
+async function atualizar (req: Request, res: Response): Promise<Response> {
     const id = +req.params.id;
     let produto = req.body;
   
     try{ 
       const produtoAtualizado = await produtoService.atualizar(id, produto);
-      res.json(produtoAtualizado);
+      return res.json(produtoAtualizado);
     }
     catch(err: any) {
-      res.status(err.id).json({msg: err.message});
+      return res.status(err.id).json({msg: err.message});
     }
 }
 
-async function deletar(req: Request, res: Response) {
+async function deletar(req: Request, res: Response): Promise<Response> {
     const id = +req.params.id;
     try{ 
       const produtoDeletado = await produtoService.deletar(id);
-      res.json(produtoDeletado);
+      return res.json(produtoDeletado);
     }
     catch(err: any) {
-      res.status(err.id).json({msg: err.message});
+      return res.status(err.id).json({msg: err.message});
     }   
 }
 

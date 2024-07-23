@@ -16,12 +16,13 @@ async function inserir(produto: Produto) {
     }
 }
 
-function consultar(id: number) {
+async function consultar(id: number): Promise<Produto> {
    
     if(id == 0 || id == null){
         throw {id:400, message:`Id inválido: ${id}`};
     }
-    const produto = produtoRepository.consultar(id);
+
+    const produto = await produtoRepository.consultar(id);
     if(produto) {
         return produto;
     }
