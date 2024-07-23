@@ -13,7 +13,7 @@ async function listar(req: Request, res: Response): Promise<Response> {
       return res.json(listaProdutos);
     }
     catch(err: any) {
-      return res.status(err.id).json({msg: err.message});
+      return res.status(400).json({msg: err.message});
     }
 }
 
@@ -24,7 +24,7 @@ async function inserir(req: Request, res: Response): Promise<Response> {
         return res.status(StatusCodes.OK).json(prodInserido);
     }
     catch(err: any) {
-      return res.status(err.id).json({msg: err.message});
+      return res.status(400).json({msg: err.message});
     }
 }
 
@@ -48,10 +48,10 @@ async function atualizar (req: Request, res: Response): Promise<Response> {
   
     try{ 
       const produtoAtualizado = await produtoService.atualizar(id, produto);
-      return res.json(produtoAtualizado);
+      return res.status(StatusCodes.OK).json(produtoAtualizado);
     }
     catch(err: any) {
-      return res.status(err.id).json({msg: err.message});
+      return res.status(400).json({msg: err.message});
     }
 }
 
@@ -62,7 +62,7 @@ async function deletar(req: Request, res: Response): Promise<Response> {
       return res.json(produtoDeletado);
     }
     catch(err: any) {
-      return res.status(err.id).json({msg: err.message});
+      return res.status(400).json({msg: err.message});
     }   
 }
 

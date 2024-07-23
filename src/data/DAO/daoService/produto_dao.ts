@@ -3,7 +3,7 @@ import { ProdutoMap } from "../entitys/produto.map";
 
 const produtoRepository = AppDataSource.getRepository(ProdutoMap);
 
-async function inserirProduto(nome: string, descricao: string, preco: number): Promise<ProdutoMap> {
+async function inserir(nome: string, descricao: string, preco: number): Promise<ProdutoMap> {
     const novoProduto = new ProdutoMap();
     novoProduto.nome = nome;
     novoProduto.descricao = descricao;
@@ -16,12 +16,12 @@ async function inserirProduto(nome: string, descricao: string, preco: number): P
 }
 
 
-async function concultarProduto(id: number): Promise<ProdutoMap | null> {
+async function concultar(id: number): Promise<ProdutoMap | null> {
     return await produtoRepository.findOneBy({id: id })
 }
 
 
-async function atualizarProduto(id: number, nome: string, descricao: string, preco: number): Promise<ProdutoMap | undefined> {
+async function atualizar(id: number, nome: string, descricao: string, preco: number): Promise<ProdutoMap | undefined> {
     const produto = await produtoRepository.findOneBy({id: id });
     if (produto) {
         produto.nome = nome;
@@ -33,7 +33,7 @@ async function atualizarProduto(id: number, nome: string, descricao: string, pre
 }
 
 
-async function deletarProduto(id: number): Promise<boolean> {
+async function deletar(id: number): Promise<boolean> {
     const produto = await produtoRepository.findOneBy({id: id });
     if (produto) {
         await produtoRepository.remove(produto);
@@ -43,14 +43,21 @@ async function deletarProduto(id: number): Promise<boolean> {
 }
 
 
-async function listarProdutos(): Promise<ProdutoMap[]> {
-    return await produtoRepository.find();
+async function listar(): Promise<ProdutoMap[]> {
+    try {
+        const produtos = await produtoRepository.find();
+        return produtos;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        // You can throw the error or handle it accordingly
+        throw new Error('Failed to fetch products');
+    }
 }
 
 module.exports = {
-    inserirProduto,
-    concultarProduto,
-    atualizarProduto,
-    deletarProduto,
-    listarProdutos
+    inserir,
+    concultar,
+    atualizar,
+    deletar,
+    listar
 }

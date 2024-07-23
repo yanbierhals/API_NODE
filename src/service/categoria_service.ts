@@ -1,7 +1,6 @@
 import { Categoria } from "../entidades/categoria";
 
 const categoriaRepository = require('../data/repository/categoria_repository')
-const categoriaRepository = require('../data/repository/categoria_repository')
 
 async function listar() {
     return await categoriaRepository.listar();
@@ -29,7 +28,7 @@ async function consultar(id: number): Promise<Categoria> {
 }
 
 async function atualizar(id: number, categoriaAtualizada: Categoria) {
-    const categoria = await categoriaRepository.buscarPorId(id);
+    const categoria = await categoriaRepository.consultar(id);
     if (!categoria) {
         throw { id: 404, message: "Categoria nao encontrada" };
     }

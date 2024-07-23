@@ -8,11 +8,12 @@ async function listar() {
     return result.rows;
 }
 
-async function inserir(produto: Produto) {
+async function inserir(produto: Produto): Promise<number> {
     const query = 'INSERT INTO public."PRODUTO" ("NOME", "PRECO", "DESCRICAO", "CATEGORIA_ID") VALUES ($1, $2, $3, $4) RETURNING "ID"';
     const values = [produto.nome, produto.preco, produto.descricao, produto.categoria.id];
     const result = await client.query(query, values);
     produto.id = result.rows[0].ID;
+    return produto.id;
 }
 
 async function consultar(id: number): Promise<Produto> {
@@ -22,10 +23,11 @@ async function consultar(id: number): Promise<Produto> {
     return result.rows[0];
 }
 
-async function atualizar(id: number, produto: Produto) {
+async function atualizar(id: number, produto: Produto): Promise<Produto> {
     const query = 'UPDATE public."PRODUTO" SET "NOME" = $1, "PRECO" = $2, "DESCRICAO" = $3, "CATEGORIA_ID" = $4 WHERE "ID" = $5';
     const values = [produto.nome, produto.preco, produto.descricao, produto.categoria.id, id];
     await client.query(query, values);
+    return produto;
 }
 
 async function deletar(id: number) {
