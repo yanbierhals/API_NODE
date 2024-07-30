@@ -24,13 +24,19 @@ async function consultar(id: number): Promise<ProdutoMap> {
         throw {id:400, message:`Id inválido: ${id}`};
     }
 
-    const produto = await produtoRepository.consultar(id);
-    if(produto) {
-        return produto;
-    }
-    else {
-        throw {id:404, message:"Produto nao encontrado"};
-    }
+    try {
+        const produto = await produtoRepository.consultar(id);
+        if(produto) {
+            return produto;
+        }
+        else {
+            throw {id:404, message:"Produto nao encontrado"};
+        }
+      } catch (error: any) {
+        // Handle or throw the error
+        throw new Error(`Failed to consult product with ID ${id}: ${error.message}`);
+      }
+  
 }
 
 async function atualizar(id: number, produtoAtualizado: Produto): Promise<Produto> {

@@ -1,5 +1,3 @@
-const loginService = require('./login')
-
 function verificarAcesso(req: any, res: any, next: any) {
     try{
         const token = req.get('token');

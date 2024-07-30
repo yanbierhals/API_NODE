@@ -1,9 +1,8 @@
 import express from 'express';
+const authController = require('../controller/auth_controller');
+
 const router = express.Router();
 
-const authController = require('../auth/auth');
-
-// Define a rota para realizar login
-router.post('/login', authController.realizarLogin);
+router.post('', authController.realizarLogin);
 
 module.exports = router;
