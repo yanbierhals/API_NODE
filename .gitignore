@@ -5,7 +5,7 @@ node_modules/
 dist/
 
 # Ignore any local development environment files
-.env
+# .env
 
 # Ignore any logs or other generated files
 logs/
