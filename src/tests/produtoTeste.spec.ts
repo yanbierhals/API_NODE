@@ -1,17 +1,20 @@
 const { consultar } = require('../service/produto_service');
 
+
+
+
 describe('Testes para o método consultar', () => {
-  test('Deve retornar um erro ao receber ID igual a 0', async () => {
-    const id = 0;
+    test('Deve retornar um erro ao receber ID igual a 0', async () => {
+        const id = 0;
 
-    // Use `expect` para verificar se a função lança um erro
-    await expect(consultar(id)).rejects.toThrow();
-  });
+        // Verifique se a função lança um erro com a mensagem esperada
+        await expect(consultar(id)).rejects.toThrow(`Id inválido: ${id}`);
+    });
 
-  test('Deve retornar um erro ao receber ID null', async () => {
-    const id = null;
+    test('Deve retornar um erro ao receber ID null', async () => {
+        const id = null;
 
-    // Use `expect` para verificar se a função lança um erro
-    await expect(consultar(id)).rejects.toThrow();
-  });
+        // Verifique se a função lança um erro com a mensagem esperada
+        await expect(consultar(id)).rejects.toThrow(`Id inválido: ${id}`);
+    });
 });

@@ -28,10 +28,10 @@ app.use(helmet());
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>');
 });
-
-app.use('/api/produtos',auth.verificarAcesso, produtoRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
-app.use('/api/categorias',auth.verificarAcesso, categoriaRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
 app.use('/api/login', authRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
+app.use(auth.verificarAcesso);
+app.use('/api/produtos', produtoRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
+app.use('/api/categorias', categoriaRouter); //auth: colocar como segundo parametro = 'middlewareAcesso.verificarAcesso'
 
 app.listen(PORT, () => {
     console.log(`Server is listening on http://localhost:${PORT}`);

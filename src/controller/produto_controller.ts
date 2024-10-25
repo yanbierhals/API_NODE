@@ -30,6 +30,7 @@ async function inserir(req: Request, res: Response): Promise<Response> {
 
 
 async function consultar(req: Request, res: Response): Promise<Response> {
+
     const id = +req.params.id; // Supondo que o id seja um número
 
     try {

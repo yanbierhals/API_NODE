@@ -13,7 +13,7 @@ function verificarLogin(user: Usuario) {
         && user.senha == userAdmin.senha)
     {
         const token = jwt.sign({id:userAdmin.id, nome:userAdmin.nome},
-            CHAVE_SECRETA, { expiresIn: '1h' })
+            CHAVE_SECRETA, { expiresIn: '10m' })
         return token;
     }
 
@@ -23,20 +23,17 @@ function verificarLogin(user: Usuario) {
 
 function verificarToken(token: any) {
     try{
-        const payload = jwt.verify(token,CHAVE_SECRETA);
+        const payload = jwt.verify(token, CHAVE_SECRETA);
         if(payload) {
-            return payload;
+            return(payload);
         }
         else {
-            throw {id:501, message:"Token invalido"};
+            throw {id: 401, message: "Voce nao tem acesso ao recurso"};
         }
-    } catch(err) {
-        throw {id:501, message:"Token invalido"};
+    } catch(error) {
+        throw {id: 401, message: "Voce nao tem acesso ao recurso"};
     }
 }
 
 
-module.exports = {
-    verificarLogin,
-    verificarToken
-}
+export { verificarLogin, verificarToken };

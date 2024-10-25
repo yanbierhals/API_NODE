@@ -1,9 +1,9 @@
-const loginService = require('../auth/login')
+import { verificarLogin, verificarToken } from '../auth/loginService'; // Ajuste o caminho conforme necessário
 
 function realizarLogin(req: any, res: any) {
      const user = req.body;
      try{ 
-        const token = loginService.verificarLogin(user);
+        const token = verificarLogin(user);
         res.status(201).json({token:token});
      }
      catch(err) {
